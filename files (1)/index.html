@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أذكاري — أذكار يومية وتسبيح</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- نجوم الخلفية -->
+  <div class="stars" id="stars"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <div class="nav-logo">✦ أذكاري</div>
+    <div class="nav-links">
+      <button class="nav-btn active-nav" onclick="showPage('home')">الرئيسية</button>
+      <button class="nav-btn" onclick="showPage('morning')">الصباح</button>
+      <button class="nav-btn" onclick="showPage('evening')">المساء</button>
+      <button class="nav-btn" onclick="showPage('tasbeeh')">التسبيح</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" title="تغيير الثيم" aria-label="تغيير الثيم">🌗</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="القائمة">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- قائمة الجوال -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button onclick="showPage('home');   closeMenu()">🏠 الرئيسية</button>
+    <button onclick="showPage('morning');closeMenu()">🌅 أذكار الصباح</button>
+    <button onclick="showPage('evening');closeMenu()">🌙 أذكار المساء</button>
+    <button onclick="showPage('tasbeeh');closeMenu()">📿 عداد التسبيح</button>
+  </div>
+
+  <!-- ─── HOME ─── -->
+  <div class="page active" id="page-home">
+    <div class="home-hero">
+      <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+      <div class="ornament">❧ ✦ ❧</div>
+      <h1 class="home-title">أذكاري</h1>
+      <p class="home-subtitle">أذكار يومية وعداد تسبيح</p>
+    </div>
+
+    <div class="home-cards">
+      <div class="home-card" onclick="showPage('morning')">
+        <div class="card-icon">🌅</div>
+        <div class="card-title">أذكار الصباح</div>
+        <div class="card-desc">ابدأ يومك بذكر الله</div>
+      </div>
+      <div class="home-card" onclick="showPage('evening')">
+        <div class="card-icon">🌙</div>
+        <div class="card-title">أذكار المساء</div>
+        <div class="card-desc">اختم يومك بالذكر</div>
+      </div>
+      <div class="home-card" onclick="showPage('tasbeeh')">
+        <div class="card-icon">📿</div>
+        <div class="card-title">عداد التسبيح</div>
+        <div class="card-desc">سبّح الله بسهولة</div>
+      </div>
+    </div>
+
+    <div class="ornament" style="margin-top:2.5rem">— ✦ —</div>
+    <p class="home-aya">«أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ» — الرعد: 28</p>
+  </div>
+
+  <!-- ─── MORNING ─── -->
+  <div class="page" id="page-morning">
+    <div class="adhkar-header">
+      <div class="adhkar-title">🌅 أذكار الصباح</div>
+      <div class="adhkar-subtitle">تُقرأ بعد صلاة الفجر حتى شروق الشمس</div>
+    </div>
+    <div class="adhkar-list" id="morning-list"></div>
+  </div>
+
+  <!-- ─── EVENING ─── -->
+  <div class="page" id="page-evening">
+    <div class="adhkar-header">
+      <div class="adhkar-title">🌙 أذكار المساء</div>
+      <div class="adhkar-subtitle">تُقرأ بعد صلاة العصر حتى غروب الشمس</div>
+    </div>
+    <div class="adhkar-list" id="evening-list"></div>
+  </div>
+
+  <!-- ─── TASBEEH ─── -->
+  <div class="page" id="page-tasbeeh">
+    <div class="tasbeeh-wrapper">
+      <div class="tasbeeh-title">📿 عداد التسبيح</div>
+
+      <div class="tasbeeh-select-row" id="tasbeeh-options"></div>
+
+      <div class="counter-dhikr-text" id="counter-text">الله أكبر</div>
+
+      <div class="counter-display">
+        <svg class="counter-progress-ring" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="108" fill="none" stroke="rgba(128,128,128,0.15)" stroke-width="5"/>
+          <circle id="progress-arc" cx="120" cy="120" r="108" fill="none"
+            stroke="#EF9F27" stroke-width="5" stroke-linecap="round"
+            stroke-dasharray="678.6" stroke-dashoffset="678.6"
+            transform="rotate(-90 120 120)"/>
+        </svg>
+        <div class="counter-ring" id="counter-ring">
+          <div class="counter-number" id="counter-num">0</div>
+          <div class="counter-sub">اضغط للتسبيح</div>
+        </div>
+        <button class="big-tap-btn" onclick="tapCounter()" aria-label="تسبيح"></button>
+      </div>
+
+      <div class="target-row">الهدف: <span id="target-label">34</span> مرة</div>
+
+      <div class="done-msg" id="done-msg">✓ أحسنت! أكملت التسبيح 🌿</div>
+
+      <div class="session-stats">
+        <div class="stat-pill">
+          <div class="stat-num" id="stat-total">0</div>
+          <span class="stat-lbl">إجمالي الجلسة</span>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num" id="stat-rounds">0</div>
+          <span class="stat-lbl">دورات مكتملة</span>
+        </div>
+      </div>
+
+      <div class="counter-actions">
+        <button class="action-btn" onclick="undoCount()">↩ تراجع</button>
+        <button class="action-btn danger" onclick="resetCounter()">↺ إعادة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p>أذكاري ✦ موقع أذكار يومية وتسبيح</p>
+    <p style="margin-top:0.35rem;font-size:0.72rem">«وَاذْكُرُوا اللَّهَ كَثِيرًا لَّعَلَّكُمْ تُفْلِحُونَ»</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
